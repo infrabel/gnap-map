@@ -1,18 +1,14 @@
 # GNaP Map plugin
 
-Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](https://github.com/infrabel/gnap-map/wiki/create-map-tech-package).
+Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](wiki/create-map-tech-package).
 
 ## Overview
-
-### Concept
 
 This library attempts to abstract away the visualization of GeoJson data: it can be used with multiple 'map views', like Google Maps or Bing Maps. New map views can be created with minimal effort, by implementing the expected functions. The user can even switch between different engines using an included 'map technology selector' directive.
 
 The GeoJson data should come from a REST endpoint. Both fetching all data at once, or only fetching data in the requested bounds (viewport) are supported. The library ensures optimal performance by only rendering items which are in the current viewport once, and only fetching new data when necessary.
 
 The library makes it easy to create and configure new layers of data, when they should be shown, and how they should be displayed. This can be configured during the Angular *config* phase, or in a *run* block in case other services must be referenced.
-
-### Architectural overview
 
 ![GNaP Map Plugin architecture](doc/architecture_front.png)
 
@@ -60,6 +56,51 @@ When the map view supports multi-selection, this event is emited when the user h
 - `selectedItems` *(object)*: An object with all the selected items, grouped by their `itemType`. Each property on the object is an item type, which is again an object, with a property `ids`, which is an array containing all the id's of the selected items of that type. Be sure to check whether all these properties exist.
 
 
+### Layer config service
+
+Used to initially configure, and then retrieve the layer configuration.
+
+#### Configuration
+
+Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services. Other than that, there is no difference between the two: both ways should provide an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties).
+
+- `setLayerConfig` is set **at config time**, on the provider.
+- `setLayerConfigDynamic` is set **rt run time**, on the service.
+
+#### Usage
+
+You can access the layer configuration at any time by calling `getDataLayers()`.
+
+### Map geo data service
+
+Gets the GeoJson data for a specific layer from a REST endpoint. Either all data of the specified type (which can then be cached locally by the map manager), or only the data within the specified bounds.
+
+Note that currently, the bounds should be passed as WGS 84 coordinates, but the returned GeoJson can be in any coordinate system as specified in the `mapTech` spec.
+
+#### Configuration
+
+There are two types of configuration: `config`-phase configuration on the provider, and configuration set during the `run`-phase, which can include other services.
+
+##### Config-time configuration
+
+`setEndPointUri`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
+
+##### Run-time configuration
+
+- `setConstructResourceUriFunction`: Optionally specify a function which accepts two parameters: the `dataLayer` *(object)*, and an optional `all` *(bool, optional, default false)*. Must return the uri which should be appended to the `endPointUri` which was configured in the `config` block.  
+By default, the function returns the `dataLayer`'s `resourceUri` property. In case `all` was set to `true`, it appends `/all` to the uri.
+
+- `constructParamsFunction`: Optionally specify a function which accepts a `dataLayer` parameter and returns an object which should be set as the `params` option in the `$http.get` request.  
+By default, this is an empty object.
+Note, however, that the service will automatically add the WGS 84 bounds, and if required, the expected output coordinate system.
+
+#### Usage
+
+You should normally not have to call anything on this service; the `mapManager` should automatically make the required calls. You may however call `getAll(dataLayer)` or `getInBounds(dataLayer, bounds)` manually.
+
+
+
+---
 
 ## Dependencies
 
