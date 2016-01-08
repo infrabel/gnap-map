@@ -18,7 +18,7 @@ Configure these static settings directly on the `mapManagerProvider`, during the
 
 - `setMapState`: Set the location of the basic map state; which is navigated back to when leaving the 'info' state. *Default: main.map*
 - `setInfoState`: Set the location of the 'info' sub state; which is navigated to when clicking on a POI. *Default: main.map.info*
-- `setTranslationLocaionBase`: Set the location which serves as the base for some translations, for e.g. layer names. *Default: main.common*
+- `setTranslationLocaionBase`: Set the location which serves as the base for some translations, for e.g. layer names. Include the final dot. *Default: main.common.*
 
 Anywhere in your application, you may set `mapManager.settings.skipCache` if you want to completely disable its caching functionalities and always fetch all data from the server.
 
