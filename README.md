@@ -4,7 +4,7 @@ Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Man
 
 ## Overview
 
-This library attempts to abstract away the visualization of GeoJson data: it can be used with multiple 'map views', like Google Maps or Bing Maps. New map views can be created with minimal effort, by implementing the expected functions. The user can even switch between different engines using an included 'map technology selector' directive.
+This library attempts to abstract away the visualization of GeoJson data: it can be used with multiple 'map views', like Google Maps or Bing Maps. New map views can be created with minimal effort, by implementing the expected functions. The user can even switch between different engines interactively, using an included 'map technology selector' directive.
 
 The GeoJson data should come from a REST endpoint. Both fetching all data at once, or only fetching data in the requested bounds (viewport) are supported. The library ensures optimal performance by only rendering items which are in the current viewport once, and only fetching new data when necessary.
 
@@ -12,13 +12,42 @@ The library makes it easy to create and configure new layers of data, when they 
 
 ![GNaP Map Plugin architecture](doc/architecture_front.png)
 
+## Who this library is for
+
+This library can only be used together with the [GNaP framework](http://www.gnap.io) because it relies on components, packages and style used therein. It only makes sense to use this library if you primarily use at least one, but probably multiple (toggleable) layers of GeoJson data from a REST endpoint.
+
+Don't use this library if you need to do entirely different things with a map, like only showing one or a couple of locations.
+
+## Getting started
+
+#### Installation
+
+- Install this package using `npm install gnap-map` in your web project folder.
+- Install a map technology, for instance [gnap-map-google](https://github.com/infrabel/gnap-map-google) by running `npm install gnap-map-google`, and following the [installation instructions](https://github.com/infrabel/gnap-map-google#installation) there.
+- Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions. (TODO!)
+    - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps API in your index file.
+
+#### Hello Worldmap
+
+- If you hadn't already, create the state you wish to insert the map in, e.g. `main.map` (if you pick another state, you should reflect that in [the configuration](#configuring-the-map-manager)).
+- Create a div with a height. Inside it, reference (one of) your installed map view directive(s), e.g.:  
+`<div map-view-google style="width: 100%; height: 500px;"></div>`
+- Optionally, if you have installed more than one map technology/view, you can also include the 'map tech selector' directive, in the main.html view, right before the `gnap-locale-selector`:  
+`<li map-tech-selector ng-if="mainVm.shouldShowMapTechSelector" class="light-blue"></li>`
+
+#### Configuration
+
+Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). You can follow the example [here](wiki/config-example). TODO.
+
+As a bare minimum, you'll probably want to set the center and zoom level of your map, configure at least one layer along with its style, and the endpoint of your API.
+
 ## Components
 
 ### Map manager service
 
 The map manager coordinates between all other components. Its main purpose is to keep track of which data in which bounds has already been fetched, and only request new data when required. It also keeps track of the currently selected item and triggers some events.
 
-#### Configuration
+#### Configuring the Map manager
 
 Configure these static settings directly on the `mapManagerProvider`, during the config phase of your module.
 
@@ -28,7 +57,7 @@ Configure these static settings directly on the `mapManagerProvider`, during the
 
 Anywhere in your application, you may set `mapManager.settings.skipCache` if you want to completely disable its caching functionalities and always fetch all data from the server.
 
-#### Usage
+#### Using the map manager
 
 For regular usage, you should not need to call anything on the map manager: the map view will call `fetchAllDataInBounds` when required. However, you may want to *force* data for one or all layers to be refreshed, for instance after changing filters. For that, you can either call this method or the `fetchDataInBounds` method with the `refresh` option. Similarly, you may want to manually call `clearData` or `clearAllData`.
 
@@ -60,30 +89,30 @@ When the map view supports multi-selection, this event is emited when the user h
 
 Used to initially configure, and then retrieve the layer configuration.
 
-#### Configuration
+#### Configuring layers
 
 Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services. Other than that, there is no difference between the two: both ways should provide an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties).
 
 - `setLayerConfig` is set **at config time**, on the provider.
 - `setLayerConfigDynamic` is set **rt run time**, on the service.
 
-#### Usage
+#### Using the layers service
 
 You can access the layer configuration at any time by calling `getDataLayers()`.
 
-### Map geo data service
+### Geo data service
 
 Gets the GeoJson data for a specific layer from a REST endpoint. Either all data of the specified type (which can then be cached locally by the map manager), or only the data within the specified bounds.
 
 Note that currently, the bounds should be passed as WGS 84 coordinates, but the returned GeoJson can be in any coordinate system as specified in the `mapTech` spec.
 
-#### Configuration
+#### Configuring the Geo data service
 
 There are two types of configuration: `config`-phase configuration on the provider, and configuration set during the `run`-phase, which can include other services.
 
 ##### Config-time configuration
 
-`setEndPointUri`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
+- `setEndPointUri`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
 
 ##### Run-time configuration
 
@@ -94,7 +123,7 @@ By default, the function returns the `dataLayer`'s `resourceUri` property. In ca
 By default, this is an empty object.
 Note, however, that the service will automatically add the WGS 84 bounds, and if required, the expected output coordinate system.
 
-#### Usage
+#### Using the geo data service
 
 You should normally not have to call anything on this service; the `mapManager` should automatically make the required calls. You may however call `getAll(dataLayer)` or `getInBounds(dataLayer, bounds)` manually.
 
