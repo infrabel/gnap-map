@@ -24,7 +24,7 @@ Don't use this library if you need to do entirely different things with a map, l
 
 - Install this package using `npm install gnap-map` in your web project folder.
 - Install a map technology, for instance [gnap-map-google](https://github.com/infrabel/gnap-map-google) by running `npm install gnap-map-google`, and following the [installation instructions](https://github.com/infrabel/gnap-map-google#installation) there.
-- Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions. (TODO!)
+- Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions. (TODO)
     - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps API in your index file.
 
 #### Hello Worldmap
@@ -32,8 +32,8 @@ Don't use this library if you need to do entirely different things with a map, l
 - If you hadn't already, create the state you wish to insert the map in, e.g. `main.map` (if you pick another state, you should reflect that in [the configuration](#configuring-the-map-manager)).
 - Create a div with a height. Inside it, reference (one of) your installed map view directive(s), e.g.:  
 `<div map-view-google style="width: 100%; height: 500px;"></div>`
-- Optionally, if you have installed more than one map technology/view, you can also include the 'map tech selector' directive, in the main.html view, right before the `gnap-locale-selector`:  
-`<li map-tech-selector ng-if="mainVm.shouldShowMapTechSelector" class="light-blue"></li>`
+- Optionally, if you have installed more than one map technology/view, you can also include the 'map tech selector' directive, in the main.html view, right before the `gnap-locale-selector`, e.g.:  
+`<li map-tech-selector class="light-blue"></li>`
 
 #### Configuration
 
@@ -94,11 +94,11 @@ Used to initially configure, and then retrieve the layer configuration.
 Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services. Other than that, there is no difference between the two: both ways should provide an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties).
 
 - `setLayerConfig` is set **at config time**, on the provider.
-- `setLayerConfigDynamic` is set **rt run time**, on the service.
+- `setLayerConfigDynamic` is set **at run time**, on the service.
 
 #### Using the layers service
 
-You can access the layer configuration at any time by calling `getDataLayers()`.
+You can access the layer configuration at any time by calling `getDataLayers()` on the service.
 
 ### Geo data service
 
@@ -120,8 +120,23 @@ There are two types of configuration: `config`-phase configuration on the provid
 By default, the function returns the `dataLayer`'s `resourceUri` property. In case `all` was set to `true`, it appends `/all` to the uri.
 
 - `constructParamsFunction`: Optionally specify a function which accepts a `dataLayer` parameter and returns an object which should be set as the `params` option in the `$http.get` request.  
-By default, this is an empty object.
-Note, however, that the service will automatically add the WGS 84 bounds, and if required, the expected output coordinate system.
+By default, this is an empty object.  
+Note, however, that the service will automatically add the following parameters:
+    - WGS 84 bounds in the following format:  
+    ```
+    {
+        "neLat": 51.04019084947656,
+        "neLng": 2.904200414924617,
+        "swLat": 51.02475337327745,
+        "swLng": 2.8353642027664137
+    }
+    ```
+    - If required (when different from the default wgs84), the expected output coordinate system in the following format:    
+    ```
+    {
+        "result": "lambert72"
+    }
+    ```
 
 #### Using the geo data service
 
