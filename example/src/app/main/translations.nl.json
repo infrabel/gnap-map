@@ -14,8 +14,7 @@
             "administration": "Administratie"
         },
         "items": {
-            "main.map": "Map",
-            "main.getting-started": "Aan de slag"
+            "main.map": "Map"
         }
     }
 }

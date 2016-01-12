@@ -14,8 +14,7 @@
             "administration": "Administration"
         },
         "items": {
-            "main.map": "Map",
-            "main.getting-started": "Commencer"
+            "main.map": "Map"
         }
     }
 }

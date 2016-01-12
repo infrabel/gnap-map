@@ -102,12 +102,6 @@
     function setupSidebarItems(sidebarService) {
         sidebarService.setItems([
             {
-                key: 'main.getting-started',
-                titleTranslationId: 'sidebar.items.main.getting-started',
-                icon: 'icon-fire',
-                state: 'main.getting-started'
-            },
-            {
                 key: 'main.map',
                 titleTranslationId: 'sidebar.items.main.map',
                 icon: 'icon-circle-blank',

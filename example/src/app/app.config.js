@@ -8,7 +8,7 @@
         .config(authConfiguration)
         .run(handleStateChangeError);
 
-    var defaultPage = '/getting-started';
+    var defaultPage = '/map';
 
     titleConfiguration.$inject = ['titleServiceProvider'];
 
