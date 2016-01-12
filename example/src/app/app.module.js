@@ -5,5 +5,7 @@
         .module('examples', 
                 ['gnap',
                  'ngSanitize',
-                 'ngResource']);
+                 'ngResource',
+                 'gnapMap',
+                 'gnapMapGoogle']);
 })();

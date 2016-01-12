@@ -1,6 +1,6 @@
 # GNaP Map plugin
 
-Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](wiki/create-map-tech-package).
+Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](wiki/create-map-tech-package). (TODO)
 
 ## Overview
 
@@ -24,20 +24,25 @@ Don't use this library if you need to do entirely different things with a map, l
 
 - Install this package using `npm install gnap-map` in your web project folder.
 - Install a map technology, for instance [gnap-map-google](https://github.com/infrabel/gnap-map-google) by running `npm install gnap-map-google`, and following the [installation instructions](https://github.com/infrabel/gnap-map-google#installation) there.
-- Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions. (TODO)
+- Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions.
+    - Reference them right after the GNaP css and js files. That way, they will get bundled along with GNaP in the vendor-gnap.css and vendor.js files by means of the GNaP `grunt dist` task.
     - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps API in your index file.
 
 #### Hello Worldmap
 
 - If you hadn't already, create the state you wish to insert the map in, e.g. `main.map` (if you pick another state, you should reflect that in [the configuration](#configuring-the-map-manager)).
 - Create a div with a height. Inside it, reference (one of) your installed map view directive(s), e.g.:  
-`<div map-view-google style="width: 100%; height: 500px;"></div>`
+    ```
+    <div map-view-google style="width: 100%; height: 500px;"></div>
+    ```
 - Optionally, if you have installed more than one map technology/view, you can also include the 'map tech selector' directive, in the main.html view, right before the `gnap-locale-selector`, e.g.:  
-`<li map-tech-selector class="light-blue"></li>`
+    ```
+    <li map-tech-selector class="light-blue"></li>
+    ```
 
 #### Configuration
 
-Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). You can follow the example [here](wiki/config-example). TODO.
+Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). You can follow the example [here](wiki/config-example). (TODO)
 
 As a bare minimum, you'll probably want to set the center and zoom level of your map, configure at least one layer along with its style, and the endpoint of your API.
 
@@ -84,14 +89,13 @@ When the map view supports multi-selection, this event is emited when the user h
 - `event` *(object)*: Default Angular event object.
 - `selectedItems` *(object)*: An object with all the selected items, grouped by their `itemType`. Each property on the object is an item type, which is again an object, with a property `ids`, which is an array containing all the id's of the selected items of that type. Be sure to check whether all these properties exist.
 
-
 ### Layer config service
 
 Used to initially configure, and then retrieve the layer configuration.
 
 #### Configuring layers
 
-Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services. Other than that, there is no difference between the two: both ways should provide an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties).
+Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services. Other than that, there is no difference between the two: both ways should provide an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties). (TODO)
 
 - `setLayerConfig` is set **at config time**, on the provider.
 - `setLayerConfigDynamic` is set **at run time**, on the service.

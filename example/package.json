@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "gnap-theme-gnap-angular": "*"
+    "gnap-theme-gnap-angular": "*",
+    "ui-select": "^0.13.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

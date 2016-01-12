@@ -106,6 +106,12 @@
                 titleTranslationId: 'sidebar.items.main.getting-started',
                 icon: 'icon-fire',
                 state: 'main.getting-started'
+            },
+            {
+                key: 'main.map',
+                titleTranslationId: 'sidebar.items.main.map',
+                icon: 'icon-circle-blank',
+                state: 'main.map'
             }// ======= yeoman sidebar hook =======
              // Note: Do not remove the above hook if you wish the sidebar to remain working
         ]);

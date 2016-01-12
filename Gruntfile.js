@@ -19,8 +19,14 @@ module.exports = function(grunt) {
     },
     copy: {
       dist: {
-        src: 'src/<%= pkg.name %>.css',
+        src: 'src/**/<%= pkg.name %>.css',
         dest: 'dist/<%= pkg.name %>.css'
+      },
+      example: {
+        expand: true,
+        flatten: true,
+        src: ['dist/*'],
+        dest: 'examples/node_modules/gnap-map/dist/'
       }
     },
     cssmin: {
@@ -36,6 +42,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   
-  grunt.registerTask('dist', ['concat', 'uglify', 'copy', 'cssmin']);
+  grunt.registerTask('dist', ['concat', 'uglify', 'copy:dist', 'cssmin', 'copy:example']);
   
 };

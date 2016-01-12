@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/daterangepicker.css" />
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/ngprogress-lite/ngprogress-lite.css" />
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/highlight/github.css" />
+        <link rel="stylesheet" href="node_modules/ui-select/dist/select.css" /
         <!-- endbuild -->
         <!-- build:css(.) vendor/css/vendor-ace.css -->
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/ace-fonts.css" />
@@ -29,6 +30,7 @@
         <!-- build:css(.) vendor/css/vendor-gnap.css -->
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/gnap.css" />
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/app.css" />
+        <link rel="stylesheet" href="node_modules/gnap-map/dist/gnap-map.css" />
         <!-- endbuild -->
         <!-- build:css(.) vendor/css/vendor-print.css -->
         <link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/print.css" media="print" />
@@ -66,6 +68,8 @@
 
     <body>
         <div ui-view>Loading...</div>
+        
+        <script src="//maps.google.com/maps/api/js?v=3.22&libraries=visualization,drawing,places"></script>
 
         <!-- build:js(.) vendor/js/vendor.js -->
         <script src="node_modules/gnap-theme-gnap-angular/js/develop/jquery.js"></script>
@@ -141,6 +145,11 @@
         <script src="node_modules/gnap-theme-gnap-angular/js/develop/gnap/validate.directive.js"></script>
         <script src="node_modules/gnap-theme-gnap-angular/js/develop/gnap/validation-messages.directive.js"></script>
         <script src="node_modules/gnap-theme-gnap-angular/js/develop/gnap/validation-message.directive.js"></script>
+        
+        <script src="node_modules/ui-select/dist/select.js"></script>
+        
+        <script src="node_modules/gnap-map/dist/gnap-map.js"></script>
+        <script src="node_modules/gnap-map-google/dist/gnap-map-google.js"></script>
         <!-- endbuild -->
     
         <!-- build:js(.) vendor/js/highlight.js -->
@@ -153,6 +162,9 @@
         <!-- build:js app/js/app.js -->
         <script src="app/app.module.js"></script>
         <script src="app/app.config.js"></script>
+
+        <script src="app/main/map/map.state.js"></script>
+        <script src="app/main/map/map.controller.js"></script>
 
         <script src="app/main/getting-started/getting-started.state.js"></script>
         <script src="app/main/getting-started/getting-started.controller.js"></script>
