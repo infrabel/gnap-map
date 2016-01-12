@@ -144,7 +144,7 @@ You should normally not have to call anything on this service; the `mapManager` 
 
 
 
----
+
 
 ## Dependencies
 
