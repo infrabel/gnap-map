@@ -1,0 +1,20 @@
+{
+    "main":  {
+        "breadcrumb": "Accueil",
+        "search": "Recherche ...",
+        "welcome": "Bienvenu",
+        "login": "Connexion",
+        "logout": "D�connexion"
+    },
+    "sidebar": {
+        "shortcuts": {
+            "statistics": "Statistiques",
+            "edit": "Modifier",
+            "profile": "Profil",
+            "administration": "Administration"
+        },
+        "items": {
+            "main.getting-started": "Commencer"
+        }
+    }
+}

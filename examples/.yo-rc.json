@@ -1,0 +1,8 @@
+{
+  "generator-gnap": {
+    "app-name": "examples",
+    "app-title": "GNaP Map Examples",
+    "theme-name": "gnap-theme-gnap-angular",
+    "port-number": "9002"
+  }
+}
