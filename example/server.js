@@ -1,21 +1,35 @@
 var express = require('express'),
 	_ = require('lodash'),
-    stations = require('./test_data/stations.json');
+    points = require('./test_data/points.json'),
+    points2 = require('./test_data/points2.json');
     
 var app = express();
 
-app.get('/stations', function(req, res) {
-	res.json(stations);
+app.get('/points', function(req, res) {
+	res.json(points);
 });
 
-app.get('/stations/bounds', function(req, res) {
-	res.json(_.filter(stations.features, function(station) {
-		return station.geometry.coordinates[0][0] > req.query.swLng &&
-			station.geometry.coordinates[0][1] > req.query.swLat &&
-			station.geometry.coordinates[0][0] < req.query.neLng &&
-			station.geometry.coordinates[0][0] < req.query.neLat;
+app.get('/points/bounds', function(req, res) {
+	res.json(_.filter(points.features, function(point) {
+		return point.geometry.coordinates[0] > req.query.swLng &&
+			point.geometry.coordinates[1] > req.query.swLat &&
+			point.geometry.coordinates[0] < req.query.neLng &&
+			point.geometry.coordinates[1] < req.query.neLat;
 	}))
-})
+});
+
+app.get('/points2', function(req, res) {
+	res.json(points2);
+});
+
+app.get('/points2/bounds', function(req, res) {
+	res.json(_.filter(points2.features, function(point) {
+		return point.geometry.coordinates[0] > req.query.swLng &&
+			point.geometry.coordinates[1] > req.query.swLat &&
+			point.geometry.coordinates[0] < req.query.neLng &&
+			point.geometry.coordinates[1] < req.query.neLat;
+	}))
+});
 
 app.listen(9003, function() {
 	console.log('Listening...');

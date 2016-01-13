@@ -1,6 +1,8 @@
 {
     "main.map":  {
         "title": "Map",
-        "breadcrumb": "Map"
+        "breadcrumb": "Map",
+        "points": "Points dans cache",
+        "points2": "Points dynamiques"
     }
 }

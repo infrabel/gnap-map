@@ -60,7 +60,7 @@ Configure these static settings directly on the `mapManagerProvider`, during the
 - `setInfoState`: Set the location of the 'info' sub state; which is navigated to when clicking on a POI. *Default: main.map.info*
 - `setTranslationLocaionBase`: Set the location which serves as the base for some translations, for e.g. layer names. Include the final dot. *Default: main.common.*
 
-Anywhere in your application, you may set `mapManager.settings.skipCache` if you want to completely disable its caching functionalities and always fetch all data from the server.
+Anywhere in your application, you may set `mapManager.settings.skipCache` if you want to completely disable data layer caching and always fetch all data from the server.
 
 #### Using the map manager
 
@@ -95,10 +95,14 @@ Used to initially configure, and then retrieve the layer configuration.
 
 #### Configuring layers
 
-Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services. Other than that, there is no difference between the two: both ways should provide an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties). (TODO)
+Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services: 
 
-- `setLayerConfig` is set **at config time**, on the provider.
+- `setLayerConfig` is set **at config time**, on the `layerConfigProvider`.
 - `setLayerConfigDynamic` is set **at run time**, on the service.
+    - **Attention**: The dynamic layer configuration cannot be injected the `mapManager` service, since this would cause a circular reference.
+
+There is no difference between the two: both functions take one argument, which is an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties). (TODO)  
+Static and dynamic layers and properties are merged; so even for one layer, you can specify some static properties, and some dynamic ones (most commonly the display functions). In case a property is specified in both, the dynamic property takes precedence.
 
 #### Using the layers service
 
@@ -116,7 +120,7 @@ There are two types of configuration: `config`-phase configuration on the provid
 
 ##### Config-time configuration
 
-- `setEndPointUri`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
+- `setEndPointUri` on the `mapGeoDataProvider`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
 
 ##### Run-time configuration
 

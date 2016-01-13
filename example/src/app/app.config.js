@@ -6,6 +6,7 @@
         .config(urlRouterConfiguration)
         .config(titleConfiguration)
         .config(authConfiguration)
+        .config(gnapMapConfiguration)
         .run(handleStateChangeError);
 
     var defaultPage = '/map';
@@ -35,6 +36,32 @@
 
     function authConfiguration($httpProvider) {
         $httpProvider.interceptors.push('authenticationInterceptor');
+    }
+    
+    gnapMapConfiguration.$inject = ['mapManagerProvider', 'layerConfigProvider', 'mapGeoDataProvider'];
+    
+    function gnapMapConfiguration(mapManagerProvider, layerConfigProvider, mapGeoDataProvider) {
+        mapManagerProvider.setMapState('main.map');
+        mapManagerProvider.setMapInfoState('main.map.info');
+        mapManagerProvider.setTranslationLocationBase('main.map.');
+        
+        layerConfigProvider.setLayerConfig({
+            point: {
+                itemType: 'point',
+                resourceUri: 'points',
+                minZoomLevel: 5,
+                translationId: 'main.map.points',
+                zIndex: 1,
+                cache: true
+            },
+            point2: {
+                itemType: 'point2',
+                resourceUri: 'points2',
+                minZoomLevel: 6,
+                translationId: 'main.map.points2',
+                zIndex: 2
+            }
+        });
     }
 
     handleStateChangeError.$inject = ['$rootScope', '$state', '$location', 'sessionService', 'unhandledErrorChannel'];

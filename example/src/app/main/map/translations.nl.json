@@ -1,6 +1,8 @@
 {
     "main.map":  {
         "title": "Map",
-        "breadcrumb": "Map"
+        "breadcrumb": "Map",
+        "points": "Gecachete punten",
+        "points2": "Dynamische punten"
     }
 }
