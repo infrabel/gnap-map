@@ -10,7 +10,7 @@
         state: {
             url: '/map',
             templateUrl: 'app/main/map/map.html',
-            controller: 'MainMapController as vm'
+            controller: 'MainMapController as vmMap'
         },
         title: {
             textTranslationId: 'main.map.title'

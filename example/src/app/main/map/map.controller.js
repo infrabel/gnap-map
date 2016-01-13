@@ -5,8 +5,10 @@
         .module('examples')
         .controller('MainMapController', MainMapController);
 
-    MainMapController.$inject = [];
+    MainMapController.$inject = ['mapManager', 'settings'];
 
-    function MainMapController() {
+    function MainMapController(mapManager, settings) {
+    	this.mapManagerSettings = mapManager.settings;
+    	this.settings = settings;
     }
 })();
