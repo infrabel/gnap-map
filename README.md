@@ -102,7 +102,7 @@ Two types of configuration are supported, and can be combined: *static* configur
     - **Attention**: The dynamic layer configuration cannot be injected the `mapManager` service, since this would cause a circular reference.
 
 There is no difference between the two: both functions take one argument, which is an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties). (TODO)  
-Static and dynamic layers and properties are merged; so even for one layer, you can specify some static properties, and some dynamic ones (most commonly the display functions). In case a property is specified in both, the dynamic property takes precedence.
+Static and dynamic layers and properties are merged; so even for one layer, you can specify some static properties, and some dynamic ones (most commonly the style functions). In case a property is specified in both, the dynamic property takes precedence.
 
 #### Using the layers service
 
@@ -120,7 +120,7 @@ There are two types of configuration: `config`-phase configuration on the provid
 
 ##### Config-time configuration
 
-- `setEndPointUri` on the `mapGeoDataProvider`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
+- `setEndpointUri` on the `mapGeoDataProvider`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
 
 ##### Run-time configuration
 

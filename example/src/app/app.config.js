@@ -7,7 +7,8 @@
         .config(titleConfiguration)
         .config(authConfiguration)
         .config(gnapMapConfiguration)
-        .run(handleStateChangeError);
+        .run(handleStateChangeError)
+        .run(gnapMapDynamicConfig);
 
     var defaultPage = '/map';
 
@@ -49,19 +50,24 @@
             point: {
                 itemType: 'point',
                 resourceUri: 'points',
-                minZoomLevel: 5,
+                minZoomLevel: 1,
                 translationId: 'main.map.points',
+                iconUrl: 'https://dl.dropboxusercontent.com/u/10093725/mapicons/brown/restaurant/bar.png',
                 zIndex: 1,
-                cache: true
+                cache: true,
+                displayLayer: true
             },
             point2: {
                 itemType: 'point2',
                 resourceUri: 'points2',
-                minZoomLevel: 6,
+                minZoomLevel: 2,
                 translationId: 'main.map.points2',
-                zIndex: 2
+                zIndex: 2,
+                displayLayer: true
             }
         });
+        
+        mapGeoDataProvider.setEndpointUri('http://localhost:9003/');
     }
 
     handleStateChangeError.$inject = ['$rootScope', '$state', '$location', 'sessionService', 'unhandledErrorChannel'];
@@ -96,5 +102,23 @@
                     unhandledErrorChannel.errorOccurred(error);
                 }
             });
+    }
+    
+    gnapMapDynamicConfig.$inject = ['layerConfig', 'mapGeoData', 'settings'];
+    
+    function gnapMapDynamicConfig(layerConfig, mapGeoData, settings) {
+        mapGeoData.setConstructResourceUriFunction(function(dataLayer, all) {
+            return all ? dataLayer.resourceUri : dataLayer.resourceUri + '/bounds';
+        });
+        
+        layerConfig.setLayerConfigDynamic({
+            point2: {
+                getStyleFunction: function(feature, iconUrl, layerProperties, zoomLevel) {
+                    return {
+                        icon: settings.iconUrl
+                    };
+                }
+            }
+        });
     }
 })();
