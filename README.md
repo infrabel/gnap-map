@@ -150,9 +150,9 @@ Note, however, that the service will automatically add the following parameters:
 
 You should normally not have to call anything on this service; the `mapManager` should automatically make the required calls. You may however call `getAll(dataLayer)` or `getInBounds(dataLayer, bounds)` manually.
 
+#### GeoJson Requirements
 
-
-
+The GeoJson returned by the REST API must meet a couple of requirements for the GNaP Map plugin to be able to work with it, and there are a couple of optional properties. These are discussed in detail [in the wiki](https://github.com/infrabel/gnap-map/wiki/geojson-properties). Summarized, each feature must have a unique id, and a `type` property which corresponds to the data layer's `itemType`. In case the geometry of the Feature is a `Polygon`, it must also contain a `center` property.
 
 ## Dependencies
 
