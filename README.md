@@ -42,7 +42,7 @@ Don't use this library if you need to do entirely different things with a map, l
 
 #### Configuration
 
-Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). Check out [the example](TODO).
+Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). Check out [the example](blob/master/example/src/app/app.config.js#L44).
 
 As a bare minimum, you'll probably want to set the center and zoom level of your map, configure at least one layer along with its style, and the endpoint of your API.
 
