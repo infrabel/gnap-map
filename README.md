@@ -26,7 +26,7 @@ Don't use this library if you need to do entirely different things with a map, l
 - Install a map technology, for instance [gnap-map-google](https://github.com/infrabel/gnap-map-google) by running `npm install gnap-map-google`, and following the [installation instructions](https://github.com/infrabel/gnap-map-google#installation) there.
 - Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions.
     - Reference them right after the GNaP css and js files. That way, they will get bundled along with GNaP in the vendor-gnap.css and vendor.js files by means of the GNaP `grunt dist` task.
-    - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps API in your index file.
+    - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps Javascript API in your index file.
 
 #### Hello Worldmap
 
@@ -42,7 +42,7 @@ Don't use this library if you need to do entirely different things with a map, l
 
 #### Configuration
 
-Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). You can follow the example [here](wiki/config-example). (TODO)
+Configure the [map manager](#configuring-the-map-manager), the [layers](#configuring-layers) to be used, and the [geo data service](#configuring-the-geo-data-service). Check out [the example](TODO).
 
 As a bare minimum, you'll probably want to set the center and zoom level of your map, configure at least one layer along with its style, and the endpoint of your API.
 

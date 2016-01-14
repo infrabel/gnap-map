@@ -39,9 +39,9 @@
         $httpProvider.interceptors.push('authenticationInterceptor');
     }
     
-    gnapMapConfiguration.$inject = ['mapManagerProvider', 'layerConfigProvider', 'mapGeoDataProvider'];
+    gnapMapConfiguration.$inject = ['mapManagerProvider', 'layerConfigProvider', 'mapGeoDataProvider', 'mapTechGoogleProvider'];
     
-    function gnapMapConfiguration(mapManagerProvider, layerConfigProvider, mapGeoDataProvider) {
+    function gnapMapConfiguration(mapManagerProvider, layerConfigProvider, mapGeoDataProvider, mapTechGoogleProvider) {
         mapManagerProvider.setMapState('main.map');
         mapManagerProvider.setMapInfoState('main.map.info');
         mapManagerProvider.setTranslationLocationBase('main.map.');
@@ -68,6 +68,13 @@
         });
         
         mapGeoDataProvider.setEndpointUri('http://localhost:9003/');
+        
+        // Configure the desired defaults of every map technology you're using
+        mapTechGoogleProvider.setDefaults({
+            zoomLevel: 8,
+            center: { lat: 50.762437, lng: 4.245922 }
+            //defaultStyleFunction: ...
+        });
     }
 
     handleStateChangeError.$inject = ['$rootScope', '$state', '$location', 'sessionService', 'unhandledErrorChannel'];
