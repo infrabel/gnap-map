@@ -1,6 +1,6 @@
 # GNaP Map plugin
 
-Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](wiki/create-map-tech-package). (TODO)
+Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](https://github.com/infrabel/gnap-map/wiki/create-map-tech-package).
 
 ## Overview
 
@@ -98,10 +98,10 @@ Used to initially configure, and then retrieve the layer configuration.
 Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services: 
 
 - `setLayerConfig` is set **at config time**, on the `layerConfigProvider`.
-- `setLayerConfigDynamic` is set **at run time**, on the service.
+- `setLayerConfigDynamic` is set **at run time**, on the `layerConfig` service.
     - **Attention**: The dynamic layer configuration cannot be injected the `mapManager` service, since this would cause a circular reference.
 
-There is no difference between the two: both functions take one argument, which is an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](wiki/layer-properties). (TODO)  
+There is no difference between the two: both functions take one argument, which is an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](https://github.com/infrabel/gnap-map/wiki/Layer-properties).  
 Static and dynamic layers and properties are merged; so even for one layer, you can specify some static properties, and some dynamic ones (most commonly the style functions). In case a property is specified in both, the dynamic property takes precedence.
 
 #### Using the layers service
