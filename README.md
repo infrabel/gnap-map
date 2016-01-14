@@ -159,6 +159,16 @@ The GeoJson returned by the REST API must meet a couple of requirements for the 
 - The Angular version of [GNaP](http://gnap.io/)
 - [ui-select](https://github.com/angular-ui/ui-select)
 
+## Contributing and example
+
+When contributing, you can test the library using the included example. Normally, you would install this library through npm, but evidently this is not possible for this example. To 'publish' the library to the example's node_modules folder, run `grunt dist`.
+
+Note that the example also uses a copy of the gnap-map-google map technology. This is installed as a actual npm dependency. *TODO*
+
+The example is a basic GNaP application, which you can run using **`grunt serve`** from the example folder. By default it runs on port 9002.
+
+The example also includes a tiny REST API service, which you can run using **`node server`**. By default it runs on port 9003. It uses test data from the test_data folder.
+
 ## License
 
 themes-gnap is licensed under [BSD (3-Clause)](http://choosealicense.com/licenses/bsd-3-clause/ "Read more about the BSD (3-Clause) License"). Refer to [LICENSE](https://github.com/infrabel/themes-gnap/blob/master/LICENSE) for more information.
