@@ -14,9 +14,7 @@ Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Man
     + [Map tech service](#map-tech-service)
     + [Map tech selector directive](#map-tech-selector-directive)
     + [Layer switch directive](#layer-switch-directive)
-- [Dependencies](#dependencies)
-- [Contributing and example](#contributing-and-example)
-- [License](#license)
+- [Dependencies, contributing and license](#dependencies)
 
 ## Overview
 
@@ -172,16 +170,24 @@ The GeoJson returned by the REST API must meet a couple of requirements for the 
 
 ### Map tech service
 
-**TODO**
+Keeps track of registered map technologies.
+
+In your application, you may want to check which map technology is currently selected. For this, you can use the `mapTech.is(key)` function. You may also want to retrieve the map technology's coordinate system, using `mapTech.getCoordinateSystem()`.
 
 ### Map tech selector directive
 
-**TODO**
+When using more than one map technology, you can let the user choose his preferred technology with this directive. Insert it right before the GNaP language selector:
+
+    <li map-tech-selector class="light-blue"></li>
+    <li gnap-locale-selector class="light-blue"></li>
 
 ### Layer switch directive
 
-**TODO**
+This directive allows users to toggle on/off a single [data layer](#configuring-layers). The directive has the following attributes:
 
+- `layer`: The `itemType` of the data layer.
+- `alwaysEnabled`: Display the layer as being 'available', even if the current zoomlevel does not fall between the layer's minimum and maximum zoom levels.
+- `linkedLayers`: Comma-separated list of `itemType`s of layers which must also be *refreshed* when toggling this layer. Note that it does *not* necessarily toggle these linked layers on and off. Generally, this can be used in case the linked layers' `shouldShowFunction` implementations depend on this layer's visibility.
 
 
 ## Dependencies
@@ -198,6 +204,8 @@ Note that the example also uses a copy of the gnap-map-google map technology. Th
 The example is a basic GNaP application, which you can run using **`grunt serve`** from the example folder. By default it runs on port 9002.
 
 The example also includes a tiny REST API service, which you can run using **`node server`**. By default it runs on port 9003. It uses test data from the test_data folder.
+
+Before publishing (and preferably, also before pushing), do not forget to run `grunt dist` to generate up-to-date script files in the dist folder.
 
 ## License
 

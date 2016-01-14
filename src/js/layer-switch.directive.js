@@ -32,7 +32,6 @@
         function link(scope, iElement, iAttrs, controller) {
             scope.layer = mapManager.dataLayers[iAttrs.layer];
             scope.alwaysEnabled = iAttrs.alwaysEnabled;
-            scope.display = iAttrs.display;
 
             scope.fetchLayerDataInBounds = fetchLayerDataInBounds;
             scope.muteDisplayOption = muteDisplayOption;
