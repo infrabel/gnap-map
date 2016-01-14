@@ -2,6 +2,22 @@
 
 Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Manages layers of [GeoJson](http://geojson.org/) data, independent of map API. Currently only [Google Maps](https://github.com/infrabel/gnap-map-google) is publicly available, but you can [create your own](https://github.com/infrabel/gnap-map/wiki/create-map-tech-package).
 
+## Contents
+
+- [Overview](#overview)
+- [Who this library is for](#who-this-library-is-for)
+- [Getting started](#getting-started)
+- [Components](#components)
+    + [Map manager service](#map-manager-service)
+    + [Layer config service](#layer-config-service)
+    + [Geo data service](#geo-data-service)
+    + [Map tech service](#map-tech-service)
+    + [Map tech selector directive](#map-tech-selector-directive)
+    + [Layer switch directive](#layer-switch-directive)
+- [Dependencies](#dependencies)
+- [Contributing and example](#contributing-and-example)
+- [License](#license)
+
 ## Overview
 
 This library attempts to abstract away the visualization of GeoJson data: it can be used with multiple 'map views', like Google Maps or Bing Maps. New map views can be created with minimal effort, by implementing the expected functions. The user can even switch between different engines interactively, using an included 'map technology selector' directive.
@@ -153,6 +169,20 @@ You should normally not have to call anything on this service; the `mapManager` 
 #### GeoJson Requirements
 
 The GeoJson returned by the REST API must meet a couple of requirements for the GNaP Map plugin to be able to work with it, and there are a couple of optional properties. These are discussed in detail [in the wiki](https://github.com/infrabel/gnap-map/wiki/geojson-properties). Summarized, each feature must have a unique id, and a `type` property which corresponds to the data layer's `itemType`. In case the geometry of the Feature is a `Polygon`, it must also contain a `center` property.
+
+### Map tech service
+
+**TODO**
+
+### Map tech selector directive
+
+**TODO**
+
+### Layer switch directive
+
+**TODO**
+
+
 
 ## Dependencies
 
