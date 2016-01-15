@@ -5,8 +5,8 @@
   "private": true,
   "dependencies": {
     "gnap-theme-gnap-angular": "*",
-    "gnap-map": "*",
-    "gnap-map-google": "*",
+    "gnap-map": "^1.0.1",
+    "gnap-map-google": "^1.0.1",
     "ui-select": "^0.13.2"
   },
   "devDependencies": {

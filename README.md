@@ -263,7 +263,7 @@ This directive allows users to toggle on/off a single [data layer](#configuring-
 
 When contributing, you can test the library using the included example. Normally, you would install this library through npm, but evidently this is not possible for this example. To 'publish' the library to the example's node_modules folder, run `grunt dist`.
 
-Note that the example also uses a copy of the gnap-map-google map technology. This is installed as an actual npm dependency. *TODO*
+Note that the example also uses a copy of the gnap-map-google map technology. This is installed as an actual npm dependency.
 
 The example is a basic GNaP application, which you can run using **`grunt serve`** from the example folder. By default it runs on port 9002.
 
