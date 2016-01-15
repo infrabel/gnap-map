@@ -105,7 +105,24 @@ When the map view supports multi-selection, this event is emited when the user h
 
 #### Item details
 
-*TODO*
+The GNaP Map library allows (and even expects by default) each feature to have details which can be shown in an info window when clicked. The application's state (and hence, uri) will change to reflect this new state. This allows direct linking to the details of any item.
+
+The only thing the map manager will do when an item is clicked, is that it will navigate towards the state that was [configured](#configuring-the-map-manager) through the `setInfoState` provider function (`main.map.info` by default), with two state parameters: the data layer's `type` and the item's `id`.
+
+> Note that if the feature id contains an underscore, the map manager assumes the format of 'type_numericalId'. In this case, the type_ prefix is stripped from the id in the state parameter. If you want this included again later on, you must prepend it again.
+
+It is then up to the info state's `resolve` function and/or the controller to:
+
+1. Fetch the desired data; optionally adding any other parameters
+2. Set the following properties on the mapManger: `mapManager.selection.id`, `mapManager.selection.type` and `mapManager.selection.details`
+3. If the map view directive's proper tooltip should be displayed, `mapManager.mapView.showInfoWindow({lat, lng})` should be called
+4. In that case, the info controller should also close the info window again upon destruction:  
+
+    $scope.$on('$destroy', function () {
+        mapManager.mapView.closeInfoWindow();
+    });
+
+If you have layers with items which don't have details, you must opt out of this behavior by setting the `hasNoDetails` layer property to `true`.
 
 ### Layer config service
 
@@ -121,13 +138,15 @@ In case you don't need services, it suffices to call `setDataLayers(object)` in 
 
 #### Using the layers service
 
-You can access the layer configuration at any time by calling `getDataLayers()` on the service. This returns a reference to the **static** layer config object (if one has been set), 'merged' with the dynamic config. Note that any changes to the static properties will be stored on the object for the duration of the application.
+You can access the layer configuration at any time by calling `getDataLayers()` on the service. This returns a reference to the **static** layer config object (if one has been set), 'merged' with the dynamic config. 
+
+> Note that any changes to the static properties will be stored on the object for the duration of the application.
 
 ### Geo data service
 
 Gets the GeoJson data for a specific layer from a REST endpoint. Either all data of the specified type (which can then be cached locally by the map manager), or only the data within the specified bounds.
 
-Note that currently, the bounds should be passed as WGS 84 coordinates, but the returned GeoJson can be in any coordinate system as specified in the `mapTech` spec.
+> Note that currently, the bounds should be passed as WGS 84 coordinates, but the returned GeoJson can be in any coordinate system as specified in the `mapTech` spec.
 
 #### Configuring the Geo data service
 
