@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         expand: true,
         flatten: true,
         src: ['dist/*'],
-        dest: 'examples/node_modules/gnap-map/dist/'
+        dest: 'example/node_modules/gnap-map/dist/'
       }
     },
     cssmin: {
