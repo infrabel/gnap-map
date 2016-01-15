@@ -36,12 +36,52 @@ Don't use this library if you need to do entirely different things with a map, l
 
 #### Installation
 
-- Install this package using `npm install gnap-map` in your web project folder.
-- Install a map technology, for instance [gnap-map-google](https://github.com/infrabel/gnap-map-google) by running `npm install gnap-map-google`, and following the [installation instructions](https://github.com/infrabel/gnap-map-google#installation) there.
-- Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions.
-    - Reference them right after the GNaP css and js files. That way, they will get bundled along with GNaP in the vendor-gnap.css and vendor.js files by means of the GNaP `grunt dist` task.
-    - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps Javascript API in your index file.
-- Reference the `gnapMap` module in your application's module definition (in the GNaP template this is the `app.module.js` file by default), along with the chosen map technology/technologies.
+First, install this package using npm in your web project folder:
+
+    $ npm install gnap-map --save
+
+Along with at least one map technology, for instance [gnap-map-google](https://github.com/infrabel/gnap-map-google). Don't forget to follow the [installation instructions](https://github.com/infrabel/gnap-map-google#installation) there.
+
+     $ npm install gnap-map-google --save
+
+> **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps Javascript API in your index file.
+
+Next, reference the required js and css files right after the gnap js and css files:
+
+```html
+<!-- build:css(.) vendor/css/vendor-gnap.css -->
+<link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/gnap.css" />
+<link rel="stylesheet" href="node_modules/gnap-theme-gnap-angular/css/develop/app.css" />
+<link rel="stylesheet" href="node_modules/gnap-map/node_modules/ui-select/dist/select.css" />
+<link rel="stylesheet" href="node_modules/gnap-map/dist/gnap-map.css" />
+<!-- endbuild -->
+```
+
+```html
+<!-- build:js(.) vendor/js/vendor.js -->
+
+<!-- ... other GNaP scripts ... -->
+<script src="node_modules/gnap-theme-gnap-angular/js/develop/gnap/validation-message.directive.js"></script>
+
+<script src="node_modules/gnap-map/node_modules/ui-select/dist/select.js"></script>
+<script src="node_modules/gnap-map/dist/gnap-map.js"></script>
+<script src="node_modules/gnap-map-google/dist/gnap-map-google.js"></script>
+<!-- endbuild -->
+```
+
+> **Note:** The GNaP Map plugin depends on the [ui-select](https://github.com/angular-ui/ui-select) library too, which is not included in GNaP.
+
+Finally, load the `gnapMap` module in your application's module definition (in the GNaP template this is the `app.module.js` file by default), along with the chosen map technology module(s):
+
+```js
+angular.module('examples', [
+    'gnap',
+    'ngSanitize',
+    'ngResource',
+    'gnapMap',
+    'gnapMapGoogle'
+]);
+```
 
 #### Hello Worldmap
 
