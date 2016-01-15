@@ -117,10 +117,11 @@ It is then up to the info state's `resolve` function and/or the controller to:
 2. Set the following properties on the mapManger: `mapManager.selection.id`, `mapManager.selection.type` and `mapManager.selection.details`
 3. If the map view directive's proper tooltip should be displayed, `mapManager.mapView.showInfoWindow({lat, lng})` should be called
 4. In that case, the info controller should also close the info window again upon destruction:  
-
-    $scope.$on('$destroy', function () {
-        mapManager.mapView.closeInfoWindow();
-    });
+```javascript
+$scope.$on('$destroy', function () {
+    mapManager.mapView.closeInfoWindow();
+});
+```
 
 If you have layers with items which don't have details, you must opt out of this behavior by setting the `hasNoDetails` layer property to `true`.
 
