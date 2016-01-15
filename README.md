@@ -117,11 +117,11 @@ It is then up to the info state's `resolve` function and/or the controller to:
 2. Set the following properties on the mapManger: `mapManager.selection.id`, `mapManager.selection.type` and `mapManager.selection.details`
 3. If the map view directive's proper tooltip should be displayed, `mapManager.mapView.showInfoWindow({lat, lng})` should be called
 4. In that case, the info controller should also close the info window again upon destruction:  
-```javascript
-$scope.$on('$destroy', function () {
-    mapManager.mapView.closeInfoWindow();
-});
-```
+    ```javascript
+    $scope.$on('$destroy', function () {
+        mapManager.mapView.closeInfoWindow();
+    });
+    ```
 
 If you have layers with items which don't have details, you must opt out of this behavior by setting the `hasNoDetails` layer property to `true`.
 
@@ -166,7 +166,7 @@ By default, the function returns the `dataLayer`'s `resourceUri` property. In ca
 By default, this is an empty object.  
 Note, however, that the service will automatically add the following parameters:
     - WGS 84 bounds in the following format:  
-    ```
+    ```json
     {
         "neLat": 51.04019084947656,
         "neLng": 2.904200414924617,
@@ -175,7 +175,7 @@ Note, however, that the service will automatically add the following parameters:
     }
     ```
     - If required (when different from the default wgs84), the expected output coordinate system in the following format:    
-    ```
+    ```json
     {
         "result": "lambert72"
     }
@@ -199,8 +199,10 @@ In your application, you may want to check which map technology is currently sel
 
 When using more than one map technology, you can let the user choose his preferred technology with this directive. Insert it right before the GNaP language selector:
 
-    <li map-tech-selector class="light-blue"></li>
-    <li gnap-locale-selector class="light-blue"></li>
+```html
+<li map-tech-selector class="light-blue"></li>
+<li gnap-locale-selector class="light-blue"></li>
+```
 
 ### Layer switch directive
 
