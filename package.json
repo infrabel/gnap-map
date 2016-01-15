@@ -1,11 +1,8 @@
 {
   "name": "gnap-map",
   "version": "0.1.0",
-  "description": "An add-on library for GNaP which adds functionalities for displaying and managing GeoJson on one or more map visualization libraries.\"",
+  "description": "An add-on library for GNaP which adds functionalities for displaying and managing GeoJson layers on one or more map visualization libraries.\"",
   "main": "dist/gnap-map.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/infrabel/gnap-map.git"
