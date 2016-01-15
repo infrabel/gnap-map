@@ -8,7 +8,7 @@
         .config(authConfiguration)
         .config(gnapMapConfiguration)
         .run(handleStateChangeError)
-        .run(gnapMapDynamicConfig);
+        .run(gnapMapRun);
 
     var defaultPage = '/map';
 
@@ -46,7 +46,7 @@
         mapManagerProvider.setMapInfoState('main.map.info');
         mapManagerProvider.setTranslationLocationBase('main.map.');
         
-        layerConfigProvider.setLayerConfig({
+        layerConfigProvider.setDataLayers({
             point: {
                 itemType: 'point',
                 resourceUri: 'points',
@@ -63,7 +63,10 @@
                 minZoomLevel: 2,
                 translationId: 'main.map.points2',
                 zIndex: 2,
-                displayLayer: true
+                displayLayer: true,
+                hasNoDetails: true,
+                cache: false,
+                alwaysRefresh: true
             }
         });
         
@@ -111,14 +114,14 @@
             });
     }
     
-    gnapMapDynamicConfig.$inject = ['layerConfig', 'mapGeoData', 'settings'];
+    gnapMapRun.$inject = ['layerConfig', 'mapGeoData', 'settings'];
     
-    function gnapMapDynamicConfig(layerConfig, mapGeoData, settings) {
+    function gnapMapRun(layerConfig, mapGeoData, settings) {
         mapGeoData.setConstructResourceUriFunction(function(dataLayer, all) {
             return all ? dataLayer.resourceUri : dataLayer.resourceUri + '/bounds';
         });
         
-        layerConfig.setLayerConfigDynamic({
+        layerConfig.setDataLayers({
             point2: {
                 getStyleFunction: function(feature, iconUrl, layerProperties, zoomLevel) {
                     return {

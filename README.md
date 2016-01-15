@@ -103,24 +103,25 @@ When the map view supports multi-selection, this event is emited when the user h
 - `event` *(object)*: Default Angular event object.
 - `selectedItems` *(object)*: An object with all the selected items, grouped by their `itemType`. Each property on the object is an item type, which is again an object, with a property `ids`, which is an array containing all the id's of the selected items of that type. Be sure to check whether all these properties exist.
 
+#### Item details
+
+*TODO*
+
 ### Layer config service
 
-Used to initially configure, and then retrieve the layer configuration.
+Used to configure and retrieve the GeoJson data layer configuration.
 
 #### Configuring layers
 
-Two types of configuration are supported, and can be combined: *static* configuration, which is set in a `config` block and can thus only use other providers and constants, and *dynamic* configuration, which is set in a `run` block and can thus also use other services: 
+Use `setDataLayers(object)` at config time on the provider *or* at run time on the service to set data layer configuration. In both cases, the function takes one argument: an object where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](https://github.com/infrabel/gnap-map/wiki/Layer-properties).
 
-- `setLayerConfig` is set **at config time**, on the `layerConfigProvider`.
-- `setLayerConfigDynamic` is set **at run time**, on the `layerConfig` service.
-    - **Attention**: The dynamic layer configuration cannot be injected the `mapManager` service, since this would cause a circular reference.
+Any time you call `layerConfig.setDataLayers(object)` at run time, the passed object recursively into the already existing data layer configuration object. If a property already existed, it is overridden.
 
-There is no difference between the two: both functions take one argument, which is an object, where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](https://github.com/infrabel/gnap-map/wiki/Layer-properties).  
-Static and dynamic layers and properties are merged; so even for one layer, you can specify some static properties, and some dynamic ones (most commonly the style functions). In case a property is specified in both, the dynamic property takes precedence.
+In case you don't need services, it suffices to call `setDataLayers(object)` in a `config` block. If you do need services, you can (also) call `setDataLayers(object)` in a `run` block. You should put all layer configuration in either of these blocks at startup time of your application.
 
 #### Using the layers service
 
-You can access the layer configuration at any time by calling `getDataLayers()` on the service.
+You can access the layer configuration at any time by calling `getDataLayers()` on the service. This returns a reference to the **static** layer config object (if one has been set), 'merged' with the dynamic config. Note that any changes to the static properties will be stored on the object for the duration of the application.
 
 ### Geo data service
 
@@ -199,7 +200,7 @@ This directive allows users to toggle on/off a single [data layer](#configuring-
 
 When contributing, you can test the library using the included example. Normally, you would install this library through npm, but evidently this is not possible for this example. To 'publish' the library to the example's node_modules folder, run `grunt dist`.
 
-Note that the example also uses a copy of the gnap-map-google map technology. This is installed as a actual npm dependency. *TODO*
+Note that the example also uses a copy of the gnap-map-google map technology. This is installed as an actual npm dependency. *TODO*
 
 The example is a basic GNaP application, which you can run using **`grunt serve`** from the example folder. By default it runs on port 9002.
 
