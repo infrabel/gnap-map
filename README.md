@@ -14,7 +14,7 @@ Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Man
     + [Map tech service](#map-tech-service)
     + [Map tech selector directive](#map-tech-selector-directive)
     + [Layer switch directive](#layer-switch-directive)
-- [Dependencies, contributing and license](#dependencies)
+- [Dependencies](#dependencies), [Contributing](#contributing) and [License](#license)
 
 ## Overview
 
@@ -41,6 +41,7 @@ Don't use this library if you need to do entirely different things with a map, l
 - Reference the dist/gnap-map.css file and the dist/gnap-map.js file for the development version, or the dist/gnap-map.min.css and dist/gnap-map.min.js files for minified versions.
     - Reference them right after the GNaP css and js files. That way, they will get bundled along with GNaP in the vendor-gnap.css and vendor.js files by means of the GNaP `grunt dist` task.
     - **Note:** When installing the Google Maps technology, be sure to follow the instructions on referencing the Google Maps Javascript API in your index file.
+- Reference the `gnapMap` module in your application's module definition (in the GNaP template this is the `app.module.js` file by default), along with the chosen map technology/technologies.
 
 #### Hello Worldmap
 
