@@ -1,6 +1,9 @@
-'use strict';
-
+/**
+ * @desc Defines the module.
+ */
 (function () {
+	'use strict';
+	
     angular.module('gnapMap', [
         'gnap',
         'ui.select'
@@ -8,7 +11,7 @@
 }());
 
 /**
- * @desc Factory which returns the layer configuration object for the selected mapTech.
+ * @desc Provides the layer configuration.
  */
 (function () {
     'use strict';
@@ -48,8 +51,9 @@
         }
     }
 })();
+
 /**
- * @desc Adds controls to toggle a layer, defined on the map-manager, on or off.
+ * @desc A directive to toggle a layer on or off.
  */
 (function () {
     'use strict';
@@ -106,7 +110,7 @@
 })();
 
 /**
- * @desc Service which provides map measurement and POI data.
+ * @desc Provides GeoJson data from a REST endpoint - either in bounds, or all data of a given type.
  */
 (function () {
     'use strict';
@@ -168,7 +172,11 @@
 	    }
 	}
 })();
-(function () {
+
+/**
+ * @desc Manages GeoJson data independently of the map view technology.
+ */
+ (function () {
     'use strict';
 
     angular
@@ -542,9 +550,13 @@
     }
 })();
 
-'use strict';
-
+/**
+ * @desc A GNaP menu item directive, to be used right before the locale selector, 
+ * which allows the user to choose a registered map view technology.
+ */
 (function () {
+    'use strict';
+    
     angular
         .module('gnapMap')
         .directive('mapTechSelector', mapTechSelector);
@@ -588,7 +600,7 @@
 })();
 
 /**
- * @desc Factory which returns the layer configuration object for the selected mapTech.
+ * @desc Manages the selected map technology.
  */
 (function () {
     'use strict';
@@ -694,12 +706,12 @@
         }
     }
 })();
-// TODO: move to gnap?
 
 // Source: https://github.com/angular/angular.js/blob/master/src/Angular.js
 
 /* jshint ignore:start */
 (function () {
+    'use strict';
 
     if (!angular.merge) {
         angular.merge = merge;

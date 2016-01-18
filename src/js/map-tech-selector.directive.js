@@ -1,6 +1,10 @@
-﻿'use strict';
-
+﻿/**
+ * @desc A GNaP menu item directive, to be used right before the locale selector, 
+ * which allows the user to choose a registered map view technology.
+ */
 (function () {
+    'use strict';
+    
     angular
         .module('gnapMap')
         .directive('mapTechSelector', mapTechSelector);

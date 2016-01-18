@@ -1,5 +1,5 @@
 ﻿/**
- * @desc Service which provides map measurement and POI data.
+ * @desc Provides GeoJson data from a REST endpoint - either in bounds, or all data of a given type.
  */
 (function () {
     'use strict';

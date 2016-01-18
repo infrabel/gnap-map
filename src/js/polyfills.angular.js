@@ -1,9 +1,8 @@
-﻿// TODO: move to gnap?
-
-// Source: https://github.com/angular/angular.js/blob/master/src/Angular.js
+﻿// Source: https://github.com/angular/angular.js/blob/master/src/Angular.js
 
 /* jshint ignore:start */
 (function () {
+    'use strict';
 
     if (!angular.merge) {
         angular.merge = merge;

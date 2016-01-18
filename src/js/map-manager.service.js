@@ -1,4 +1,7 @@
-﻿(function () {
+﻿/**
+ * @desc Manages GeoJson data independently of the map view technology.
+ */
+ (function () {
     'use strict';
 
     angular

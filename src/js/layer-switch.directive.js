@@ -1,5 +1,5 @@
 ﻿/**
- * @desc Adds controls to toggle a layer, defined on the map-manager, on or off.
+ * @desc A directive to toggle a layer on or off.
  */
 (function () {
     'use strict';

@@ -1,5 +1,5 @@
 ﻿/**
- * @desc Factory which returns the layer configuration object for the selected mapTech.
+ * @desc Provides the layer configuration.
  */
 (function () {
     'use strict';
