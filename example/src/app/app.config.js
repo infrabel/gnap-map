@@ -50,7 +50,7 @@
             point: {
                 itemType: 'point',
                 resourceUri: 'points',
-                minZoomLevel: 1,
+                minZoomLevel: 0,
                 translationId: 'main.map.points',
                 iconUrl: 'https://dl.dropboxusercontent.com/u/10093725/mapicons/brown/restaurant/bar.png',
                 zIndex: 1,
@@ -60,13 +60,23 @@
             point2: {
                 itemType: 'point2',
                 resourceUri: 'points2',
-                minZoomLevel: 2,
+                minZoomLevel: 1,
                 translationId: 'main.map.points2',
                 zIndex: 2,
                 displayLayer: true,
                 hasNoDetails: true,
-                cache: false,
-                alwaysRefresh: true
+                cache: false
+            },
+            random: {
+                itemType: 'random',
+                resourceUri: 'random',
+                minZoomLevel: 2,
+                translationId: 'main.map.random',
+                iconUrl: 'https://dl.dropboxusercontent.com/u/10093725/mapicons/brown/transport/airport.png',
+                zIndex: 3,
+                displayLayer: true,
+                hasNoDetails: true,
+                moving: true
             }
         });
         

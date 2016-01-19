@@ -16,7 +16,6 @@ app.get('/points', function(req, res) {
 });
 
 app.get('/points/bounds', function(req, res) {
-	var selectedFeatures = [];
 	res.json(convertArrayOfFeaturesToFeatureCollection(_.filter(points.features, function(point) {
 		return point.geometry.coordinates[0] > req.query.swLng &&
 			point.geometry.coordinates[1] > req.query.swLat &&
@@ -30,13 +29,23 @@ app.get('/points2', function(req, res) {
 });
 
 app.get('/points2/bounds', function(req, res) {
-	var selectedFeatures = [];
 	res.json(convertArrayOfFeaturesToFeatureCollection(_.filter(points2.features, function(point) {
 		return point.geometry.coordinates[0] > req.query.swLng &&
 			point.geometry.coordinates[1] > req.query.swLat &&
 			point.geometry.coordinates[0] < req.query.neLng &&
 			point.geometry.coordinates[1] < req.query.neLat;
 	})));
+});
+
+app.get('/random/bounds', function(req, res) {
+	var points = _.range(20).map((x, i) => generatePointFeature(
+		_.random(Number(req.query.swLat), Number(req.query.neLat), true),
+		_.random(Number(req.query.swLng), Number(req.query.neLng), true),
+		'random',
+		"random_" + i
+	));
+	
+	res.json(convertArrayOfFeaturesToFeatureCollection(points));
 });
 
 app.listen(9003, function() {
@@ -47,5 +56,19 @@ function convertArrayOfFeaturesToFeatureCollection(arrayOfFeatures) {
 	return {
 		"type": "FeatureCollection",
 		"features": arrayOfFeatures,
+	};
+}
+
+function generatePointFeature(lat, lng, type, id, label) {
+	return {
+		"id": id, 
+		"type": "Feature",
+		"properties": { 
+			"label": label,
+			"type": type
+		},"geometry": {
+			"type": "Point",
+			"coordinates": [lng,lat]
+		}
 	};
 }

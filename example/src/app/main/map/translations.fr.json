@@ -3,6 +3,7 @@
         "title": "Map",
         "breadcrumb": "Map",
         "points": "Points dans cache",
-        "points2": "Points dynamiques"
+        "points2": "Points dynamiques",
+        "random": "Random"
     }
 }
