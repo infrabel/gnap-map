@@ -14,6 +14,7 @@ Adds mapping functionality to the [GNaP](http://gnap.io/) Angular framework. Man
     + [Map tech service](#map-tech-service)
     + [Map tech selector directive](#map-tech-selector-directive)
     + [Layer switch directive](#layer-switch-directive)
+    + [Auto-refresh layer switch directive](#auto-refresh-layer-switch-directive)
 - [Dependencies](#dependencies), [Contributing](#contributing) and [License](#license)
 
 ## Overview
@@ -249,9 +250,21 @@ When using more than one map technology, you can let the user choose his preferr
 
 This directive allows users to toggle on/off a single [data layer](#configuring-layers). The directive has the following attributes:
 
-- `layer`: The `itemType` of the data layer.
-- `alwaysEnabled`: Display the layer as being 'available', even if the current zoomlevel does not fall between the layer's minimum and maximum zoom levels.
-- `linkedLayers`: Comma-separated list of `itemType`s of layers which must also be *refreshed* when toggling this layer. Note that it does *not* necessarily toggle these linked layers on and off. Generally, this can be used in case the linked layers' `shouldShowFunction` implementations depend on this layer's visibility.
+- `layer`: Required. The `itemType` of the data layer to toggle on/off.
+- `hide-icon`: Optional. Whether or not to hide the icon in front of the switch.
+- `hide-label`: Optional. Whether or not to hide the label after the switch.
+- `always-enabled`: Optional. Display the layer as being 'available', even if the current zoomlevel does not fall between the layer's minimum and maximum zoom levels.
+- `linked-layers`: Optional. Comma-separated list of `itemType`s of layers which must also be *refreshed* when toggling this layer. Note that it does *not* necessarily toggle these linked layers on and off. Generally, this can be used in case the linked layers' `shouldShowFunction` implementations depend on this layer's visibility.
+
+### Auto-refresh layer switch directive
+
+A specific type of layer switch which, when toggled on, will automatically refresh the data every `interval` milliseconds. It has the same properties as the normal layer switch, and these additional properties:
+
+- `interval`: The interval, in milliseconds, after which to refresh the layer.
+- `layer-refresh`: Data from entire layer is cleared, fetched from the server, and drawn.
+- `layer-append`: Data is fetched from the server and drawn (but not cleared first). Use this to either append new data, or redraw features with an already existing id while avoiding flickering (ie: moving features).
+- `linked-layers-refresh`: Same as `layer-refresh` but for the linked layers.
+- `linked-layers-append`: Same as `layer-append` but for the linked layers.
 
 
 ## Dependencies
