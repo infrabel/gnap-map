@@ -12,6 +12,8 @@
 
     function layerSwitchAutoRefresh($interval, mapManager) {
 
+        var translationBase = mapManager.config.translationLocationBase;
+
         return {
             restrict: 'AE',
             link: link,
@@ -22,18 +24,25 @@
                 linkedLayers: '@',
                 linkedLayersRefresh: '=?',
                 linkedLayersAppend: '=?',
-                interval: '=?'
+                interval: '=?',
+                hideIcon: '=?',
+                hideLabel: '=?'
             },
             template: '' +
 '<div class="layer-switch">' +
-'    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{layer.itemType}}" ng-model="vm.layer.displayLayer">' +
+'    <label ng-if="vm.layer.iconUrl && !hideIcon" for="{{vm.layer.itemType}}"><img style="width: 20px" ng-src="{{vm.layer.iconUrl}}" /></label>'+
+'    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{vm.layer.itemType}}" ng-model="vm.layer.displayLayer">' +
 '    <span class="lbl"></span>' +
+'    <label ng-hide="hideLabel" ng-class="{ \'text-muted\': vm.muteDisplayOption() }" for="{{vm.layer.itemType}}">'+
+'        {{(vm.layer.translationId || \'' + translationBase + '\' + vm.layer.itemType + \'s\') | translate}}'+
+'    </label>'+
 '</div>'
         };
 
         function link(scope, iElement, iAttrs, controller) {
             var vm = scope.vm = {};
             vm.layer = mapManager.dataLayers[scope.layer];
+            vm.muteDisplayOption = muteDisplayOption;
 
             var canceller;
 
@@ -73,6 +82,10 @@
                     $interval.cancel(canceller);
                     canceller = null;
                 }
+            }
+
+            function muteDisplayOption() {
+                return !scope.alwaysEnabled && mapManager.mapView.viewPort.getZoomLevel() < scope.layer.minZoomLevel;
             }
 
             scope.$watch(function () { return scope.interval; }, function (newValue, oldValue) {

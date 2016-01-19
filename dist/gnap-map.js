@@ -66,6 +66,8 @@
 
     function layerSwitchAutoRefresh($interval, mapManager) {
 
+        var translationBase = mapManager.config.translationLocationBase;
+
         return {
             restrict: 'AE',
             link: link,
@@ -76,18 +78,25 @@
                 linkedLayers: '@',
                 linkedLayersRefresh: '=?',
                 linkedLayersAppend: '=?',
-                interval: '=?'
+                interval: '=?',
+                hideIcon: '=?',
+                hideLabel: '=?'
             },
             template: '' +
 '<div class="layer-switch">' +
-'    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{layer.itemType}}" ng-model="vm.layer.displayLayer">' +
+'    <label ng-if="vm.layer.iconUrl && !hideIcon" for="{{vm.layer.itemType}}"><img style="width: 20px" ng-src="{{vm.layer.iconUrl}}" /></label>'+
+'    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{vm.layer.itemType}}" ng-model="vm.layer.displayLayer">' +
 '    <span class="lbl"></span>' +
+'    <label ng-hide="hideLabel" ng-class="{ \'text-muted\': vm.muteDisplayOption() }" for="{{vm.layer.itemType}}">'+
+'        {{(vm.layer.translationId || \'' + translationBase + '\' + vm.layer.itemType + \'s\') | translate}}'+
+'    </label>'+
 '</div>'
         };
 
         function link(scope, iElement, iAttrs, controller) {
             var vm = scope.vm = {};
             vm.layer = mapManager.dataLayers[scope.layer];
+            vm.muteDisplayOption = muteDisplayOption;
 
             var canceller;
 
@@ -129,6 +138,10 @@
                 }
             }
 
+            function muteDisplayOption() {
+                return !scope.alwaysEnabled && mapManager.mapView.viewPort.getZoomLevel() < scope.layer.minZoomLevel;
+            }
+
             scope.$watch(function () { return scope.interval; }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
                     reInitializeTimer();
@@ -165,24 +178,29 @@
         return {
             restrict: 'AE',
             link: link,
-            scope: true,
+            scope: {
+                layer: '@',
+                linkedLayers: '@',
+                alwaysEnabled: '=?',
+                hideIcon: '=?',
+                hideLabel: '=?'
+            },
             template: ''+
-'<span ng-class="{ \'translucent\': muteDisplayOption() }" class="layer-switch">'+
-'    <label ng-if="layer.iconUrl" for="{{layer.itemType}}"><img style="width: 20px" ng-src="{{layer.iconUrl}}" /></label>'+
-'    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{layer.itemType}}" ng-model="layer.displayLayer" ng-change=\'fetchLayerDataInBounds()\'>'+
+'<span ng-class="{ \'translucent\': vm.muteDisplayOption() }" class="layer-switch">'+
+'    <label ng-if="vm.layer.iconUrl && !hideIcon" for="{{vm.layer.itemType}}"><img style="width: 20px" ng-src="{{vm.layer.iconUrl}}" /></label>'+
+'    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{vm.layer.itemType}}" ng-model="vm.layer.displayLayer" ng-change=\'vm.fetchLayerDataInBounds()\'>'+
 '    <span class="lbl"></span>'+
-'    <label ng-class="{ \'text-muted\': muteDisplayOption() }" for="{{layer.itemType}}">'+
-'        {{(layer.translationId || \'' + translationBase + '\' + layer.itemType + \'s\') | translate}}'+
+'    <label ng-hide="hideLabel" ng-class="{ \'text-muted\': vm.muteDisplayOption() }" for="{{vm.layer.itemType}}">'+
+'        {{(vm.layer.translationId || \'' + translationBase + '\' + vm.layer.itemType + \'s\') | translate}}'+
 '    </label>'+
 '</span>'
         };
 
         function link(scope, iElement, iAttrs, controller) {
-            scope.layer = mapManager.dataLayers[iAttrs.layer];
-            scope.alwaysEnabled = iAttrs.alwaysEnabled;
-
-            scope.fetchLayerDataInBounds = fetchLayerDataInBounds;
-            scope.muteDisplayOption = muteDisplayOption;
+            var vm = scope.vm = {};
+            vm.layer = mapManager.dataLayers[scope.layer];
+            vm.fetchLayerDataInBounds = fetchLayerDataInBounds;
+            vm.muteDisplayOption = muteDisplayOption;
 
             ////////// Scope method implementations
 
