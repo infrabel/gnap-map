@@ -25,11 +25,12 @@
                 linkedLayersRefresh: '=?',
                 linkedLayersAppend: '=?',
                 interval: '=?',
+                alwaysEnabled: '=?',
                 hideIcon: '=?',
                 hideLabel: '=?'
             },
             template: '' +
-'<div class="layer-switch">' +
+'<div ng-class="{ \'translucent\': vm.muteDisplayOption() }" class="layer-switch">' +
 '    <label ng-if="vm.layer.iconUrl && !hideIcon" for="{{vm.layer.itemType}}"><img style="width: 20px" ng-src="{{vm.layer.iconUrl}}" /></label>'+
 '    <input class="ace ace-switch ace-switch-3" type="checkbox" id="{{vm.layer.itemType}}" ng-model="vm.layer.displayLayer">' +
 '    <span class="lbl"></span>' +
@@ -85,7 +86,7 @@
             }
 
             function muteDisplayOption() {
-                return !scope.alwaysEnabled && mapManager.mapView.viewPort.getZoomLevel() < scope.layer.minZoomLevel;
+                return !scope.alwaysEnabled && mapManager.mapView.viewPort.getZoomLevel() < vm.layer.minZoomLevel;
             }
 
             scope.$watch(function () { return scope.interval; }, function (newValue, oldValue) {

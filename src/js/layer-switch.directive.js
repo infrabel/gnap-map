@@ -54,7 +54,7 @@
             }
 
             function muteDisplayOption() {
-                return !scope.alwaysEnabled && mapManager.mapView.viewPort.getZoomLevel() < scope.layer.minZoomLevel;
+                return !scope.alwaysEnabled && mapManager.mapView.viewPort.getZoomLevel() < vm.layer.minZoomLevel;
             }
         }
     }
