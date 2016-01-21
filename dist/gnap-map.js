@@ -36,7 +36,7 @@
 
         function layerConfigFactory($log) {
             return {
-                setDataLayers: function (dataLayers) { angular.merge(_dataLayers || {}, dataLayers) }, // Should be called during run phase
+                setDataLayers: function (dataLayers) { _dataLayers = angular.merge(_dataLayers || {}, dataLayers) },
                 getDataLayers: getDataLayers
             };
 
