@@ -272,6 +272,13 @@ A specific type of layer switch which, when toggled on, will automatically refre
 - The Angular version of [GNaP](http://gnap.io/)
 - [ui-select](https://github.com/angular-ui/ui-select)
 
+#### Interesting map-related libraries
+
+You might find these awesome open source libraries useful:
+
+- If you're looking for map icons, I highly advise [Nicolas Mollet's Map Icon Collection](https://mapicons.mapsmarker.com/), containing 1000+ stylable icons, for free (licensed under [CC BY SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)). You can't hotlink them, but you're free to download them and host them yourself, for instance publicly on Dropbox.
+- If you're looking for a way to convert GeoJson to KML, check out [tmcw's tokml library](https://github.com/mapbox/tokml).
+
 ## Contributing and example
 
 When contributing, you can test the library using the included example. First, run `npm install` in the `example` folder to install all required dependencies.
