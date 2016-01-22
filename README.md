@@ -274,18 +274,15 @@ A specific type of layer switch which, when toggled on, will automatically refre
 
 ## Contributing and example
 
-When contributing, you can test the library using the included example. Normally, you would install this library through npm, but evidently this is not possible for this example. To 'publish' the library to the example's node_modules folder, run `grunt dist`.
+When contributing, you can test the library using the included example. First, run `npm install` in the `example` folder to install all required dependencies.
 
-Note that the example also uses a copy of the gnap-map-google map technology. This is installed as an actual npm dependency.
+From then on, you can run the special `grunt example` task included in this library's main grunt file to launch the example application. This will:
+- Perform the `grunt dist` task, which concatenates and minifies the required files to the `dist` folder, and copies them to the example's `node_modules` folders.
+- Runs the client GNaP example application (on port 9002).
+- Runs a tiny node server which returns some sample GeoJson (on port 9003).
 
-The example is a basic GNaP application, which you can run using **`grunt serve`** from the example folder. By default it runs on port 9002.
-
-The example also includes a tiny REST API service, which you can run using **`node server`**. By default it runs on port 9003. It uses test data from the test_data folder.
-
-Before publishing (and preferably, also before pushing), do not forget to run `grunt dist` to generate up-to-date script files in the dist folder.
+> **Attention!** Before publishing (and preferably, also before pushing), do not forget to run `grunt dist` to generate up-to-date script files in the dist folder!
 
 ## License
 
-themes-gnap is licensed under [BSD (3-Clause)](http://choosealicense.com/licenses/bsd-3-clause/ "Read more about the BSD (3-Clause) License"). Refer to [LICENSE](https://github.com/infrabel/themes-gnap/blob/master/LICENSE) for more information.
-
-The GNaP theme uses ```Ace - Responsive Admin Template``` as its base theme, which is licensed under [Extended License](https://github.com/infrabel/themes-gnap/blob/master/custom/ace/LICENSE-Ace), our license covers redistribution and usage by you. However, if you would like to show your support to the original author, you can [buy a Single application license here](https://wrapbootstrap.com/theme/ace-responsive-admin-template-WB0B30DGR?ref=cc), it's quite cheap after all.
+This library and GNaP are licensed under [BSD (3-Clause)](http://choosealicense.com/licenses/bsd-3-clause/ "Read more about the BSD (3-Clause) License"). Refer to [LICENSE](https://github.com/infrabel/gnap-map/blob/master/LICENSE) for more information.

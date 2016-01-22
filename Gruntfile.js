@@ -50,4 +50,37 @@ module.exports = function(grunt) {
   
   grunt.registerTask('dist', ['concat', 'uglify', 'copy:dist', 'cssmin', 'copy:example', 'copy:examplenpm']);
   
+  grunt.registerTask('example', function() {
+    grunt.task.run('dist');
+    
+    var cb = this.async();
+    
+    var childClient = grunt.util.spawn({
+      grunt: true,
+      args: ['serve'],
+      opts: {
+          cwd: 'example'
+      }
+    }, function(error, result, code) {
+        cb();
+    });
+    
+    var childServer = grunt.util.spawn({
+      cmd: 'node',
+      args: ['server'],
+      opts: {
+          cwd: 'example'
+      }
+    }, function(error, result, code) {
+        cb();
+    });
+
+    setOutputToProcessOut(childClient);
+    setOutputToProcessOut(childServer);
+  });
+  
+  function setOutputToProcessOut(child) {
+    child.stdout.pipe(process.stdout);
+    child.stderr.pipe(process.stderr);
+  }
 };
