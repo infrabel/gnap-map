@@ -781,12 +781,12 @@
             }
 
             function getSelectedMapTechKey() {
-                return selectedMapTechKey || localStorageService.get('mapTech') || _defaultMapTechKey;
+                return selectedMapTechKey || localStorageService.get('map-tech') || _defaultMapTechKey;
             }
 
             function setSelectedMapTechKey(key) {
                 selectedMapTechKey = key;
-                localStorageService.set('mapTech', key);
+                localStorageService.set('map-tech', key);
                 $window.location.reload();
             }
 
