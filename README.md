@@ -279,7 +279,7 @@ You might find these awesome open source libraries useful:
 
 ## Contributing and example
 
-When contributing, you can test the library using the included example. First, run `npm install` in the `example` folder to install all required dependencies.
+When contributing, you can test the library using the included example. First, run `npm install` in the main folder **and** in the `example` folder to install all required dependencies.
 
 From then on, you can run the special `grunt example` task included in this library's main grunt file to launch the example application. This will:
 - Perform the `grunt dist` task, which concatenates and minifies the required files to the `dist` folder, and copies them to the example's `node_modules` folders.
