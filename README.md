@@ -151,7 +151,7 @@ The GNaP Map library allows (and even expects by default) each feature to have d
 
 The only thing the map manager will do when an item is clicked, is that it will navigate towards the state that was [configured](#configuring-the-map-manager) through the `setInfoState` provider function (`main.map.info` by default), with two state parameters: the data layer's `type` and the item's `id`.
 
-> Note that if the feature id contains an underscore, the map manager assumes the format of '<type>_<numericalId>'. In this case, the <type>_ prefix is stripped from the id in the state parameter. If you want this included again later on, you must prepend it again.
+> Note that if the feature id contains an underscore, the map manager assumes the format of 'type_numericalId'. In this case, the 'type_' prefix is stripped from the id in the state parameter. If you want this included again later on, you must prepend it again.
 
 It is then up to the info state's `resolve` function and/or the controller to:
 
