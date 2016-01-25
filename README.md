@@ -113,18 +113,18 @@ The map manager coordinates between all other components. Its main purpose is to
 Configure these static settings directly on the `mapManagerProvider`, during the config phase of your module.
 
 - `setMapState`: Set the location of the basic map state; which is navigated back to when leaving the 'info' state. *Default: main.map*
-- `setInfoState`: Set the location of the 'info' sub state; which is navigated to when clicking on a POI. *Default: main.map.info*
-- `setTranslationLocaionBase`: Set the location which serves as the base for some translations, for e.g. layer names. Include the final dot. *Default: main.common.*
+- `setMapInfoState`: Set the location of the 'info' sub state; which is navigated to when clicking on a POI. *Default: main.map.info*
+- `setTranslationLocationBase`: Set the location which serves as the base for some translations, for e.g. layer names. Include the final dot. *Default: main.common.*
 
 Anywhere in your application, you may set `mapManager.settings.skipCache` if you want to completely disable data layer caching and always fetch all data from the server.
 
 #### Using the map manager
 
-For regular usage, you should not need to call anything on the map manager: the map view will call `fetchAllDataInBounds` when required. However, you may want to *force* data for one or all layers to be refreshed, for instance after changing filters. For that, you can either call this method or the `fetchDataInBounds` method with the `refresh` option. Similarly, you may want to manually call `clearData` or `clearAllData`.
+For regular usage, you should not need to call anything on the map manager: the map view will call `fetchAllDataInBounds` when required. However, you may want to *force* data for one or all layers to be refreshed, for instance after changing filters. For that, you can respectively call `fetchDataInBounds` for a specific layer or `fetchAllDataInBounds` for all layers. Similarly, you may want to manually call `clearData` or `clearAllData`. Check the docs in the code for a description of the parameters.
 
 The currently selected item can and should be set on the `selected` property on the map manager, for instance on the state change to `map.info`.
 
-Lastly, you can initiate several actions on the map view through the map manager, with the `mapView` property and its `viewPort` child property. If you want to check whether the map view supports the action, you can use the `mapManager.mapFunctionIsSupported` function and pass a reference to the desired function. Some commonly functions are `viewPort.setCenter` and `viewPort.setZoomLevel`. All functions are explained in detail in the [Map View directives](#map-view-directives) section.
+Lastly, you can initiate several actions on the map view through the map manager, with the `mapView` property and its `viewPort` child property. If you want to check whether the map view supports the action, you can use the `mapManager.mapFunctionIsSupported` function and pass a reference to the desired function. Some commonly functions are `viewPort.setCenter` and `viewPort.setZoomLevel`. All functions are explained in detail in the [Map View functions](https://github.com/infrabel/gnap-map/wiki/create-map-tech-package#map-view-functions) section in the wiki.
 
 #### Events
 
@@ -151,7 +151,7 @@ The GNaP Map library allows (and even expects by default) each feature to have d
 
 The only thing the map manager will do when an item is clicked, is that it will navigate towards the state that was [configured](#configuring-the-map-manager) through the `setInfoState` provider function (`main.map.info` by default), with two state parameters: the data layer's `type` and the item's `id`.
 
-> Note that if the feature id contains an underscore, the map manager assumes the format of 'type_numericalId'. In this case, the type_ prefix is stripped from the id in the state parameter. If you want this included again later on, you must prepend it again.
+> Note that if the feature id contains an underscore, the map manager assumes the format of '<type>_<numericalId>'. In this case, the <type>_ prefix is stripped from the id in the state parameter. If you want this included again later on, you must prepend it again.
 
 It is then up to the info state's `resolve` function and/or the controller to:
 
@@ -173,15 +173,13 @@ Used to configure and retrieve the GeoJson data layer configuration.
 
 #### Configuring layers
 
-Use `setDataLayers(object)` at config time on the provider *or* at run time on the service to set data layer configuration. In both cases, the function takes one argument: an object where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](https://github.com/infrabel/gnap-map/wiki/Layer-properties).
+Use `setDataLayers(object)` at config time on the `layerConfigProvider` *or* at run time on the `layerConfig` service to set data layer configuration. In both cases, the function takes one argument: an object where each property represents a layer. The property name is the key of the layer and should be the same as its `itemType` property. All layer properties are discussed [in the wiki](https://github.com/infrabel/gnap-map/wiki/Layer-properties).
 
-Any time you call `layerConfig.setDataLayers(object)` at run time, the passed object recursively into the already existing data layer configuration object. If a property already existed, it is overridden.
-
-In case you don't need services, it suffices to call `setDataLayers(object)` in a `config` block. If you do need services, you can (also) call `setDataLayers(object)` in a `run` block. You should put all layer configuration in either of these blocks at startup time of your application.
+Any time you call `layerConfig.setDataLayers(object)` at run time, the passed object is merged recursively into the already existing data layer configuration object. If a property already existed, it is overridden.
 
 #### Using the layers service
 
-You can access the layer configuration at any time by calling `getDataLayers()` on the service. This returns a reference to the **static** layer config object (if one has been set), 'merged' with the dynamic config. 
+You can access the layer configuration at any time by calling `layerConfig.getDataLayers()` on the service. This returns a reference to the layer config object. 
 
 > Note that any changes to the static properties will be stored on the object for the duration of the application.
 
@@ -197,14 +195,14 @@ There are two types of configuration: `config`-phase configuration on the provid
 
 ##### Config-time configuration
 
-- `setEndpointUri` on the `mapGeoDataProvider`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
+- `mapGeoDataProvider.setEndpointUri`: Set the base endpoint which the service should retrieve its data from. Should include a trailing slash. After this, the resource's uri is appended.
 
 ##### Run-time configuration
 
-- `setConstructResourceUriFunction`: Optionally specify a function which accepts two parameters: the `dataLayer` *(object)*, and an optional `all` *(bool, optional, default false)*. Must return the uri which should be appended to the `endPointUri` which was configured in the `config` block.  
+- `mapGeoData.setConstructResourceUriFunction`: Optionally specify a function which accepts two parameters: the `dataLayer` *(object)*, and an optional `all` *(bool, optional, default false)*. Must return the uri which should be appended to the `endPointUri` which was configured in the `config` block.  
 By default, the function returns the `dataLayer`'s `resourceUri` property. In case `all` was set to `true`, it appends `/all` to the uri.
 
-- `constructParamsFunction`: Optionally specify a function which accepts a `dataLayer` parameter and returns an object which should be set as the `params` option in the `$http.get` request.  
+- `mapGeoData.constructParamsFunction`: Optionally specify a function which accepts a `dataLayer` parameter and returns an object which should be set as the `params` option in the `$http.get` request.  
 By default, this is an empty object.  
 Note, however, that the service will automatically add the following parameters:
     - WGS 84 bounds in the following format:  
@@ -225,7 +223,7 @@ Note, however, that the service will automatically add the following parameters:
 
 #### Using the geo data service
 
-You should normally not have to call anything on this service; the `mapManager` should automatically make the required calls. You may however call `getAll(dataLayer)` or `getInBounds(dataLayer, bounds)` manually.
+You should normally not have to call anything on this service; the `mapManager` should automatically make the required calls. You may however call `mapGeoData.getAll(dataLayer)` or `mapGeoData.getInBounds(dataLayer, bounds)` manually.
 
 #### GeoJson Requirements
 
