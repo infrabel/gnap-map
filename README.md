@@ -270,7 +270,11 @@ A specific type of layer switch which, when toggled on, will automatically refre
 - The Angular version of [GNaP](http://gnap.io/)
 - [ui-select](https://github.com/angular-ui/ui-select)
 
-#### Interesting map-related libraries
+## Browser support
+
+Although GNaP supports and was tested on a wide range of browsers and devices, this Map library was only tested on the latest versions of Google and Firefox.
+
+## Related libraries
 
 You might find these awesome open source libraries useful:
 
