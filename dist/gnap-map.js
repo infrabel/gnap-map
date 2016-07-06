@@ -328,6 +328,11 @@
                 details: null // Will contain details for the selected item, is watched
             };
 
+            var featureToTrack = {
+                type: null,
+                id: null
+            };
+
             var loadingStatus = {
                 featuresLoading: 0,
                 featuresAdding: 0
@@ -402,7 +407,9 @@
                     mapState: _mapState,
                     mapInfoState: _mapInfoState,
                     translationLocationBase: _translationLocationBase
-                }
+                },
+
+                trackFeature: trackFeature
             };
 
             ////////// Service function implementations
@@ -445,6 +452,13 @@
 
             function onMultipleItemsSelected(selectedItems) {
                 $rootScope.$emit('items-selected', selectedItems);
+            }
+
+            // Use this function to track a feature after it is (re)loaded.
+            function trackFeature(type, id)
+            {
+                featureToTrack.type = type;
+                featureToTrack.id = id;
             }
 
             ////////// Other private functions
@@ -610,7 +624,7 @@
                             if (newFeatureCount > 0) {
                                 var featureType = data.features[0].properties.type; // We expect every feature we add to have a 'type' property
 
-                                mapView._addGeoJsonData(data, featureType, redraw);
+                                mapView._addGeoJsonData(data, featureType, redraw, featureToTrack);
 
                                 // Display info
                                 $log.log('Added ' + newFeatureCount + ' ' + featureType + 's.');
