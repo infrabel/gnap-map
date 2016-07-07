@@ -346,6 +346,7 @@
             var mapView = { // Must be set by map view during activation!
                 _addGeoJsonData: noFunctionSetFunction,
                 _removeGeoJsonData: noFunctionSetFunction,
+                _centerOnFeature: noFunctionSetFunction,
 
                 addCustomKml: noFunctionSetFunction,
                 removeCustomKml: noFunctionSetFunction,
