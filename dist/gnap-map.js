@@ -624,7 +624,15 @@
                             if (newFeatureCount > 0) {
                                 var featureType = data.features[0].properties.type; // We expect every feature we add to have a 'type' property
 
-                                mapView._addGeoJsonData(data, featureType, redraw, featureToTrack);
+                                mapView._addGeoJsonData(data, featureType, redraw);
+
+                                if (featureToTrack && featureToTrack.type && featureToTrack.type === featureType && featureToTrack.id) {
+                                    angular.forEach(geoJsonData.features, function (feature) {
+ 	                                    if(feature.id && feature.type && feature.id ===  featureToTrack.type.charAt(0).toUpperCase() + featureToTrack.type.slice(1) + '_' + featureToTrack.id) {
+                                            mapView.trackFeature(feature);
+                                        }
+                                    });
+                                }
 
                                 // Display info
                                 $log.log('Added ' + newFeatureCount + ' ' + featureType + 's.');
