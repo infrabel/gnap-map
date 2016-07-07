@@ -328,6 +328,11 @@
                 details: null // Will contain details for the selected item, is watched
             };
 
+            var featureToTrack = {
+                type: null,
+                id: null
+            };
+
             var loadingStatus = {
                 featuresLoading: 0,
                 featuresAdding: 0
@@ -341,6 +346,7 @@
             var mapView = { // Must be set by map view during activation!
                 _addGeoJsonData: noFunctionSetFunction,
                 _removeGeoJsonData: noFunctionSetFunction,
+                _centerOnFeature: noFunctionSetFunction,
 
                 addCustomKml: noFunctionSetFunction,
                 removeCustomKml: noFunctionSetFunction,
@@ -402,7 +408,9 @@
                     mapState: _mapState,
                     mapInfoState: _mapInfoState,
                     translationLocationBase: _translationLocationBase
-                }
+                },
+
+                trackFeature: trackFeature
             };
 
             ////////// Service function implementations
@@ -445,6 +453,13 @@
 
             function onMultipleItemsSelected(selectedItems) {
                 $rootScope.$emit('items-selected', selectedItems);
+            }
+
+            // Use this function to track a feature after it is (re)loaded.
+            function trackFeature(type, id)
+            {
+                featureToTrack.type = type;
+                featureToTrack.id = id;
             }
 
             ////////// Other private functions
@@ -611,6 +626,14 @@
                                 var featureType = data.features[0].properties.type; // We expect every feature we add to have a 'type' property
 
                                 mapView._addGeoJsonData(data, featureType, redraw);
+
+                                if (featureToTrack && featureToTrack.type && featureToTrack.type === featureType && featureToTrack.id) {
+                                    angular.forEach(geoJsonData.features, function (feature) {
+ 	                                    if(feature.id && feature.type && feature.id ===  featureToTrack.type.charAt(0).toUpperCase() + featureToTrack.type.slice(1) + '_' + featureToTrack.id) {
+                                            mapView._centerOnFeature(feature);
+                                        }
+                                    });
+                                }
 
                                 // Display info
                                 $log.log('Added ' + newFeatureCount + ' ' + featureType + 's.');
