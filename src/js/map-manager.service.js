@@ -341,7 +341,7 @@
                                 if (featureToTrack && featureToTrack.type && featureToTrack.type === featureType && featureToTrack.id) {
                                     angular.forEach(geoJsonData.features, function (feature) {
  	                                    if(feature.id && feature.type && feature.id ===  featureToTrack.type.charAt(0).toUpperCase() + featureToTrack.type.slice(1) + '_' + featureToTrack.id) {
-                                            mapView.trackFeature(feature);
+                                            mapView.centerOnFeature(feature);
                                         }
                                     });
                                 }
